@@ -2,14 +2,20 @@ defmodule Candidate do
 
   def score(candidate, group_size, amity) do
     candidate
+      # |> IO.inspect(label: Groups)
+      |> group_scores(group_size, amity)
+      |> calculate_score()
+  end
+
+  def group_scores(state, group_size, amity) do
+    state
       |> Enum.chunk_every(group_size)
       |> Enum.map(fn group -> get_group_score(group, amity) end)
-      |> calculate_score()
   end
 
   def get_group_score(group, amity) do
     get_group_edges(group)
-      |> Enum.map(fn pair -> amity[pair] end)
+      |> Enum.map(fn {a, b} -> amity[{a, b}] || amity[{b, a}] end)
       |> Enum.filter(fn value -> value != nil end)
       # |> IO.inspect(label: "Valid Edges: ")
       |> calculate_score()
@@ -19,12 +25,8 @@ defmodule Candidate do
     mean = Statistics.mean(values)
     stdev = Statistics.stdev(values)
     penalty = stdev / (mean + 1)
-
-    IO.puts("Mean: #{mean}")
-    IO.puts("St Deviation: #{stdev}")
-    IO.puts("Penalty: #{penalty}")
-
-    mean - penalty
+    score = mean - penalty
+    score
   end
 
   def get_group_edges([]), do: []
@@ -42,7 +44,7 @@ defmodule Candidate do
     first_index = :rand.uniform(count) - 1
     second_index = :rand.uniform(count) - 1
 
-    ListHelpers.swap(state, first_index, second_index)
+    ListHelper.swap(state, first_index, second_index)
   end
 
 

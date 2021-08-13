@@ -1,4 +1,4 @@
-defmodule ListHelpers do
+defmodule ListHelper do
   def swap(a, i1, i2) do
     e1 = Enum.at(a, i1)
     e2 = Enum.at(a, i2)
