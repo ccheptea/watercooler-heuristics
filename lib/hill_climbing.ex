@@ -1,9 +1,10 @@
 defmodule HillClimbing do
 
-  @max_iterations 100
+  @default_iterations 100
 
-  def start(initial_state, group_size, edges) do
-    Enum.to_list 0..@max_iterations
+  def start(initial_state, group_size, edges, iterations \\ @default_iterations) do
+    0..iterations
+    |> Enum.to_list()
     |> Enum.reduce(initial_state, fn _, best -> next_best(best, group_size, edges) end)
   end
 

@@ -47,5 +47,4 @@ defmodule Candidate do
     ListHelper.swap(state, first_index, second_index)
   end
 
-
 end

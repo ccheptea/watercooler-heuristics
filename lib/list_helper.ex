@@ -1,10 +1,10 @@
 defmodule ListHelper do
-  def swap(a, i1, i2) do
-    e1 = Enum.at(a, i1)
-    e2 = Enum.at(a, i2)
+  def swap(list, index1, index2) do
+    element1 = Enum.at(list, index1)
+    element2 = Enum.at(list, index2)
 
-    a
-    |> List.replace_at(i1, e2)
-    |> List.replace_at(i2, e1)
+    list
+    |> List.replace_at(index1, element2)
+    |> List.replace_at(index2, element1)
   end
 end
