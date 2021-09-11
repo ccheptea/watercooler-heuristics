@@ -9,13 +9,8 @@ defmodule HillClimbing do
 
   defp next_best(candidate, group_size, edges) do
     next_candidate = Candidate.neighbour(candidate)
-
-    # IO.inspect(next_candidate, label: FoundNeighbour)
-
     current_score = Candidate.score(candidate, group_size, edges)
     next_score = Candidate.score(next_candidate, group_size, edges)
-
-    # IO.inspect(next_score, label: NextScore)
 
     if next_score > current_score do
       next_candidate
