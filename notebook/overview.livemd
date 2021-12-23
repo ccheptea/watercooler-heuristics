@@ -1,14 +1,19 @@
-# Overview
+# Optimizing Yappy Chat Rooms
 
-## Initial Data
+## Introduction
+
+Hello
+This is something we would like to show you!
+
+## Initializing Data
 
 ```elixir
 alias VegaLite, as: Vl
 alias Candidate
 
-default_group_size = 4
+default_group_size = 3
 
-%{state: state, amity: edges} = InputReader.load_data_from_file("data/example2.txt")
+%{state: state, amity: edges} = InputReader.load_data_from_file("data/example3.txt")
 
 fitness_func = fn s ->
   Candidate.score(s, default_group_size, edges)
@@ -36,12 +41,37 @@ Vl.new(width: 400, height: 300)
 ## Hill Climbing
 
 ```elixir
-optimized = HillClimbing.start(state, fitness_func, %{iterations: 1000})
+optimized = HillClimbing.start(state, fitness_func, %{iterations: 10H000})
 optimized_group_scores = Candidate.group_scores(optimized, default_group_size, edges)
 optimized_score = Candidate.score(optimized, default_group_size, edges)
 
 IO.inspect(optimized, label: "\tState")
 IO.inspect(optimized_group_scores, label: "\tValues")
+IO.puts("\tScore: #{optimized_score}")
+
+data =
+  optimized_group_scores
+  |> Stream.with_index()
+  |> Enum.map(fn {x, i} ->
+    %{"algo" => "Hill Climbing", "group_index" => "#{i}", "score" => x}
+  end)
+
+Vl.new(width: 400, height: 300)
+  |> Vl.data_from_values(data)
+  |> Vl.mark(:bar)
+  |> Vl.encode_field(:x, "group_index", type: :nominal, axis: [label_angle: 0])
+  |> Vl.encode_field(:y, "score", type: :quantitative)
+```
+
+## Simulated Annealing
+
+```elixir
+optimized = Heuristics.SimulatedAnnealing.start(state, fitness_func, %{iterations: 10000})
+optimized_group_scores = Candidate.group_scores(optimized, default_group_size, edges)
+optimized_score = Candidate.score(optimized, default_group_size, edges)
+
+# IO.inspect(optimized, label: "\tState")
+# IO.inspect(optimized_group_scores, label: "\tValues")
 IO.puts("\tScore: #{optimized_score}")
 
 data =
