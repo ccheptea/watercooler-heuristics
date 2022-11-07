@@ -1,4 +1,4 @@
-defmodule HillClimbing do
+defmodule Heuristics.HillClimbing do
   @behaviour Heuristic
 
   @type state :: Heuristic.state

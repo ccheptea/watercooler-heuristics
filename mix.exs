@@ -23,8 +23,9 @@ defmodule Yappy.MixProject do
   defp deps do
     [
       {:statistics, "~> 0.6.2"},
-      {:vega_lite, "~> 0.1.1"},
-      {:kino, "~> 0.3.0"},
+      {:kino, "0.7.0"},
+      {:vega_lite, "~> 0.1.5"},
+      {:kino_vega_lite, "~> 0.1.6"},
       {:mox, "~> 0.5", only: :test}
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}

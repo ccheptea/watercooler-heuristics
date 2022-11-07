@@ -4,8 +4,6 @@ defmodule CandidateTest do
 
   # ----------------------
 
-  # ----------------------
-
   test "get group edges" do
     edges = Candidate.get_group_edges([1, 2, 3])
 
@@ -24,5 +22,5 @@ defmodule CandidateTest do
     assert edges == []
   end
 
-   # ----------------------
+  # ----------------------
 end
